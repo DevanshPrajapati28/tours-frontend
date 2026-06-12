@@ -1,0 +1,175 @@
+/* =========================================================
+   GLOBAL CSS — Travel Agency React App
+   Design system: Travel Blue (#0F4C81) + Sunset Orange (#FF6B35)
+   ========================================================= */
+
+:root {
+  --bg: #f9fafb;
+  --fg: #1a2332;
+  --card: #ffffff;
+  --card-fg: #1a2332;
+  --primary: #0f4c81;
+  --primary-fg: #f9fafb;
+  --secondary: #edf2f7;
+  --secondary-fg: #0f4c81;
+  --accent: #ff6b35;
+  --accent-fg: #ffffff;
+  --muted: #f3f6fa;
+  --muted-fg: #64748b;
+  --border: #e2e8f0;
+  --destructive: #ef4444;
+  --radius: 0.75rem;
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,.13);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-family: var(--font-sans); font-size: 16px; scroll-behavior: smooth; overflow-x: hidden; width: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5 { font-family: var(--font-serif); line-height: 1.25; }
+
+a { color: inherit; text-decoration: none; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+button { cursor: pointer; font-family: var(--font-sans); }
+
+/* ---- Utility ---- */
+.container { max-width: 80rem; margin-inline: auto; padding-inline: 1rem; }
+@media (min-width: 640px)  { .container { padding-inline: 1.5rem; } }
+@media (min-width: 1024px) { .container { padding-inline: 2rem; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .625rem 1.5rem; border-radius: 9999px;
+  font-size: .875rem; font-weight: 600; transition: all .2s;
+  border: none; outline: none; cursor: pointer;
+}
+.btn-primary { background: var(--primary); color: var(--primary-fg); }
+.btn-primary:hover { background: #0d3f6d; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-accent  { background: var(--accent);  color: var(--accent-fg); }
+.btn-accent:hover  { background: #e55a28; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+.btn-outline:hover { background: var(--primary); color: var(--primary-fg); }
+
+/* ---- Section heading ---- */
+.section-eyebrow {
+  display: inline-block;
+  font-size: .8125rem; font-weight: 700; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: .5rem;
+}
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700; color: var(--fg); text-wrap: balance;
+}
+.section-desc { margin-top: .75rem; color: var(--muted-fg); max-width: 42ch; line-height: 1.7; }
+
+/* ---- Card ---- */
+.card {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border); box-shadow: var(--shadow-sm);
+  overflow: hidden; transition: box-shadow .3s, transform .3s;
+}
+.card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+
+/* ---- Grid layouts ---- */
+.grid-2 { display: grid; gap: 1.5rem; }
+.grid-3 { display: grid; gap: 1.5rem; }
+.grid-4 { display: grid; gap: 1.25rem; }
+@media (min-width: 640px) {
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ---- Page section spacing ---- */
+.section { padding-block: 5rem; }
+.section-alt { background: var(--secondary); }
+
+/* ---- Form inputs ---- */
+.input {
+  width: 100%;
+  padding: .625rem .875rem;
+  border-radius: .5rem;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: .875rem;
+  font-family: var(--font-sans);
+  color: var(--fg);
+  outline: none;
+  transition: box-shadow .2s, border-color .2s;
+}
+.input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(15,76,129,.15); }
+
+/* ---- Badge ---- */
+.badge {
+  display: inline-flex; align-items: center; gap: .25rem;
+  padding: .25rem .75rem; border-radius: 9999px;
+  font-size: .75rem; font-weight: 600;
+}
+.badge-accent { background: var(--accent); color: var(--accent-fg); }
+.badge-primary { background: var(--primary); color: var(--primary-fg); }
+.badge-glass { background: rgba(255,255,255,.2); color: #fff; backdrop-filter: blur(4px); }
+
+/* ---- WhatsApp button ---- */
+.whatsapp-btn {
+  position: fixed; bottom: 1.25rem; right: 1.25rem; z-index: 50;
+  display: flex; align-items: center; gap: .75rem;
+  background: #25d366; color: #fff;
+  padding: .75rem 1rem; border-radius: 9999px;
+  box-shadow: 0 4px 20px rgba(37,211,102,.35);
+  transition: transform .2s;
+}
+.whatsapp-btn:hover { transform: scale(1.05); }
+
+/* ---- Pulse ring ---- */
+@keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
+.ping { animation: ping 1.5s cubic-bezier(0,0,.2,1) infinite; }
+
+/* ---- Fade in ---- */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.fade-up { animation: fadeUp .6s ease both; }
+
+/* ---- Testimonial dots ---- */
+.dot-active { width: 1.5rem; height: .5rem; background: var(--accent); border-radius: 9999px; }
+.dot { width: .5rem; height: .5rem; background: var(--border); border-radius: 9999px; }
+
+/* ---- Star fill ---- */
+.star-fill { fill: var(--accent); color: var(--accent); }
+
+/* ---- Tag pill ---- */
+.tag { padding: .2rem .7rem; border-radius: 9999px; font-size: .75rem; font-weight: 500; }
+.tag-secondary { background: var(--secondary); color: var(--secondary-fg); }
+
+/* ---- Image cover ---- */
+.img-cover { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- Aspect ratios ---- */
+.aspect-4-3 { aspect-ratio: 4/3; }
+.aspect-3-4 { aspect-ratio: 3/4; }
+.aspect-16-9 { aspect-ratio: 16/9; }
+.aspect-sq   { aspect-ratio: 1/1; }
+
+/* ---- Responsive hide ---- */
+@media (max-width: 1023px) { .lg-only { display: none !important; } }
+@media (min-width: 1024px) { .mobile-only { display: none !important; } }
