@@ -70,7 +70,7 @@ export default function HomePage() {
   const [popularDest, setPopularDest] = useState<Destination[]>([])
 
   const [currentSlide, setCurrentSlide] = useState(0)
-  const intervalRef = useRef<number | null>(null)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   // Refs for Intro section animations
   const introSectionRef = useRef<HTMLElement>(null)

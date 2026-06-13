@@ -1,13 +1,5 @@
 import { useEffect, useState, useCallback } from 'react'
-import {
-  Clock,
-  Star,
-  CheckCircle2,
-  Trash2,
-  RefreshCw,
-  MessageSquare,
-  LucideIcon
-} from 'lucide-react'
+import { Clock, Star, CheckCircle2, Trash2, RefreshCw, MessageSquare } from 'lucide-react'
 import { useApi } from '../AuthContext'
 
 type Inquiry = {
@@ -26,11 +18,7 @@ type Inquiry = {
 const STATUS_OPTIONS = ['new', 'read', 'resolved'] as const
 const statusColor: Record<string, string> = { new: '#ff6b35', read: '#0f4c81', resolved: '#16a34a' }
 const statusBg:    Record<string, string> = { new: 'rgba(255,107,53,.1)', read: 'rgba(15,76,129,.1)', resolved: 'rgba(22,163,74,.1)' }
-const StatusIcon: Record<string, LucideIcon> = {
-  new: Clock,
-  read: Star,
-  resolved: CheckCircle2,
-}
+const StatusIcon: Record<string, React.ElementType> = { new: Clock, read: Star, resolved: CheckCircle2 }
 
 export default function AdminInquiries() {
   const api = useApi()

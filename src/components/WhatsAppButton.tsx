@@ -1,7 +1,7 @@
 import { COMPANY } from '../data'
 
 export default function WhatsAppButton() {
-  const url = `https://wa.me/${COMPANY.whatsapp}?text=${encodeURIComponent(COMPANY.whatsappMessage)}`
+  const url = `https://wa.me/${COMPANY.phone[0].replace(/\D/g, '')}?text=${encodeURIComponent(COMPANY.whatsappMessage)}`
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" className="whatsapp-btn">
       <span style={{

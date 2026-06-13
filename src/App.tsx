@@ -21,23 +21,15 @@ import AdminDestinations from './admin/pages/AdminDestinations'
 import AdminInquiries from './admin/pages/AdminInquiries'
 import AdminSubscribers from './admin/pages/AdminSubscribers'
 
-function ProtectedAdminRoute({ children }: { children: React.ReactElement }) {
+function ProtectedAdminRoute({ children }: { children: JSX.Element }) {
   const { auth } = useAuth()
-
-  if (!auth) {
-    return <Navigate to="/admin" replace />
-  }
-
+  if (!auth) return <Navigate to="/admin" replace />
   return children
 }
 
 function AdminLoginRoute() {
   const { auth } = useAuth()
-
-  if (auth) {
-    return <Navigate to="/admin/dashboard" replace />
-  }
-
+  if (auth) return <Navigate to="/admin/dashboard" replace />
   return <AdminLogin />
 }
 
@@ -46,8 +38,7 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-
-          {/* Public Website */}
+          {/* ── Public Frontend ── */}
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/packages" element={<PackagesPage />} />
@@ -58,29 +49,22 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/blog" element={<BlogPage />} />
-
-            {/* 404 Page */}
+            {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
-          {/* Admin Login */}
+          {/* ── Admin Auth ── */}
           <Route path="/admin" element={<AdminLoginRoute />} />
 
-          {/* Protected Admin Routes */}
-          <Route
-            path="/admin"
-            element={
-              <ProtectedAdminRoute>
-                <AdminLayout />
-              </ProtectedAdminRoute>
-            }
-          >
+          {/* ── Admin Protected ── */}
+          <Route path="/admin" element={<ProtectedAdminRoute><AdminLayout /></ProtectedAdminRoute>}>
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="packages" element={<AdminPackages />} />
             <Route path="destinations" element={<AdminDestinations />} />
             <Route path="inquiries" element={<AdminInquiries />} />
             <Route path="subscribers" element={<AdminSubscribers />} />
           </Route>
+
 
         </Routes>
       </BrowserRouter>
