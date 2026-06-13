@@ -5,11 +5,34 @@ import PageHero from '../components/PageHero'
 import SectionHeading from '../components/SectionHeading'
 import { services } from '../data'
 import {
-  MapPin, Globe, Sparkles, Hotel, TrainFront, Ship, FileCheck, BookUser, Users, Briefcase, Plane, Heart
+  MapPin,
+  Globe,
+  Sparkles,
+  Hotel,
+  TrainFront,
+  Ship,
+  FileCheck,
+  BookUser,
+  Users,
+  Briefcase,
+  Plane,
+  Heart,
+  LucideIcon,
 } from 'lucide-react'
 
-const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
-  MapPin, Globe, Sparkles, Hotel, Plane, TrainFront, Ship, FileCheck, BookUser, Heart, Users, Briefcase,
+const iconMap: Record<string, LucideIcon> = {
+  MapPin,
+  Globe,
+  Sparkles,
+  Hotel,
+  Plane,
+  TrainFront,
+  Ship,
+  FileCheck,
+  BookUser,
+  Heart,
+  Users,
+  Briefcase,
 }
 
 /* ─── Tilt + glow card ─────────────────────────────────────── */
