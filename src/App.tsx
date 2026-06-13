@@ -21,15 +21,23 @@ import AdminDestinations from './admin/pages/AdminDestinations'
 import AdminInquiries from './admin/pages/AdminInquiries'
 import AdminSubscribers from './admin/pages/AdminSubscribers'
 
-function ProtectedAdminRoute({ children }: { children: JSX.Element }) {
+function ProtectedAdminRoute({ children }: { children: React.ReactElement }) {
   const { auth } = useAuth()
-  if (!auth) return <Navigate to="/admin" replace />
+
+  if (!auth) {
+    return <Navigate to="/admin" replace />
+  }
+
   return children
 }
 
 function AdminLoginRoute() {
   const { auth } = useAuth()
-  if (auth) return <Navigate to="/admin/dashboard" replace />
+
+  if (auth) {
+    return <Navigate to="/admin/dashboard" replace />
+  }
+
   return <AdminLogin />
 }
 
@@ -38,7 +46,8 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* ── Public Frontend ── */}
+
+          {/* Public Website */}
           <Route element={<Layout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/packages" element={<PackagesPage />} />
@@ -49,13 +58,23 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/blog" element={<BlogPage />} />
+
+            {/* 404 Page */}
+            <Route path="*" element={<NotFoundPage />} />
           </Route>
 
-          {/* ── Admin Auth ── */}
+          {/* Admin Login */}
           <Route path="/admin" element={<AdminLoginRoute />} />
 
-          {/* ── Admin Protected ── */}
-          <Route path="/admin" element={<ProtectedAdminRoute><AdminLayout /></ProtectedAdminRoute>}>
+          {/* Protected Admin Routes */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedAdminRoute>
+                <AdminLayout />
+              </ProtectedAdminRoute>
+            }
+          >
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="packages" element={<AdminPackages />} />
             <Route path="destinations" element={<AdminDestinations />} />
@@ -63,8 +82,6 @@ export default function App() {
             <Route path="subscribers" element={<AdminSubscribers />} />
           </Route>
 
-          {/* Catch-all */}
-          <Route path="*" element={<Layout><NotFoundPage /></Layout>} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
