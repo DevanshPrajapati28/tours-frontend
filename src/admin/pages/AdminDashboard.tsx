@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Package, MessageSquare, MapPin, Mail, TrendingUp, Star, Clock, CheckCircle2, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useApi } from '../AuthContext'
+import type { LucideIcon } from 'lucide-react'
 
 type Stats = {
   totalPackages: number
@@ -13,12 +14,11 @@ type Stats = {
 
 type Inquiry = { id: string; name: string; subject: string; status: string; createdAt: string }
 
-const statCards = (s: Stats) => [
-  { icon: Package,       label: 'Total Packages',    value: s.totalPackages,    color: '#0f4c81', bg: 'rgba(15,76,129,.1)',  link: '/admin/packages' },
-  { icon: MapPin,        label: 'Destinations',       value: s.totalDestinations, color: '#7c3aed', bg: 'rgba(124,58,237,.1)', link: '/admin/destinations' },
-  { icon: MessageSquare, label: 'Total Inquiries',    value: s.totalInquiries,   color: '#ff6b35', bg: 'rgba(255,107,53,.1)', link: '/admin/inquiries' },
-  { icon: Mail,          label: 'Subscribers',        value: s.totalSubscribers, color: '#16a34a', bg: 'rgba(22,163,74,.1)',  link: '/admin/subscribers' },
-]
+const StatusIcon: Record<string, LucideIcon> = {
+  new: Clock,
+  read: Star,
+  resolved: CheckCircle2,
+}
 
 export default function AdminDashboard() {
   const api = useApi()
