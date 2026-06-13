@@ -1,5 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Package, MessageSquare, MapPin, Mail, TrendingUp, Star, Clock, CheckCircle2, ArrowRight } from 'lucide-react'
+import {
+  Package,
+  MessageSquare,
+  MapPin,
+  Mail,
+  TrendingUp,
+  Star,
+  Clock,
+  CheckCircle2,
+  ArrowRight,
+  LucideIcon,
+} from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useApi } from '../AuthContext'
 import type { LucideIcon } from 'lucide-react'
