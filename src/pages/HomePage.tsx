@@ -16,17 +16,7 @@ import DestinationCard from '../components/DestinationCard'
 import TestimonialCarousel from '../components/TestimonialCarousel'
 import { Send } from 'lucide-react'
 import {
-  MapPin,
-  Globe,
-  Sparkles,
-  Hotel,
-  TrainFront,
-  Ship,
-  FileCheck,
-  BookUser,
-  Users,
-  Briefcase,
-  LucideIcon,
+  MapPin, Globe, Sparkles, Hotel, TrainFront, Ship, FileCheck, BookUser, Users, Briefcase
 } from 'lucide-react'
 import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
 import gsap from 'gsap'
@@ -34,19 +24,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const iconMap: Record<string, LucideIcon> = {
-  MapPin,
-  Globe,
-  Sparkles,
-  Hotel,
-  Plane,
-  TrainFront,
-  Ship,
-  FileCheck,
-  BookUser,
-  Heart,
-  Users,
-  Briefcase,
+const iconMap: Record<string, React.ElementType> = {
+  MapPin, Globe, Sparkles, Hotel, Plane, TrainFront, Ship, FileCheck, BookUser, Heart, Users, Briefcase,
 }
 
 const whyReasons = [
