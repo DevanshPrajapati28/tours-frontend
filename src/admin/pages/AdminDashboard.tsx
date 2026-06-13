@@ -9,12 +9,9 @@ import {
   Clock,
   CheckCircle2,
   ArrowRight,
-  LucideIcon,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useApi } from '../AuthContext'
-import type { LucideIcon } from 'lucide-react'
-
 type Stats = {
   totalPackages: number
   totalDestinations: number
@@ -23,13 +20,20 @@ type Stats = {
   totalSubscribers: number
 }
 
-type Inquiry = { id: string; name: string; subject: string; status: string; createdAt: string }
 
-const StatusIcon: Record<string, LucideIcon> = {
+type Inquiry = { id: string; name: string; subject: string; status: string; createdAt: string }
+const StatusIcon = {
   new: Clock,
   read: Star,
   resolved: CheckCircle2,
 }
+
+const statCards = (s: Stats) => [
+  { icon: Package, label: 'Total Packages', value: s.totalPackages, color: '#0f4c81', bg: 'rgba(15,76,129,.1)', link: '/admin/packages' },
+  { icon: MapPin, label: 'Destinations', value: s.totalDestinations, color: '#7c3aed', bg: 'rgba(124,58,237,.1)', link: '/admin/destinations' },
+  { icon: MessageSquare, label: 'Total Inquiries', value: s.totalInquiries, color: '#ff6b35', bg: 'rgba(255,107,53,.1)', link: '/admin/inquiries' },
+  { icon: Mail, label: 'Subscribers', value: s.totalSubscribers, color: '#16a34a', bg: 'rgba(22,163,74,.1)', link: '/admin/subscribers' },
+]
 
 export default function AdminDashboard() {
   const api = useApi()
@@ -49,7 +53,6 @@ export default function AdminDashboard() {
 
   const statusColor: Record<string, string> = { new: '#ff6b35', read: '#0f4c81', resolved: '#16a34a' }
   const statusBg:    Record<string, string> = { new: 'rgba(255,107,53,.1)', read: 'rgba(15,76,129,.1)', resolved: 'rgba(22,163,74,.1)' }
-  const StatusIcon: Record<string, React.ComponentType<{size?:number;style?:React.CSSProperties}>> = { new: Clock, read: Star, resolved: CheckCircle2 }
 
   if (loading) return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
