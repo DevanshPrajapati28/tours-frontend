@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { API_URL } from '../config'
 
 type AuthState = { token: string; username: string } | null
 
@@ -17,7 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   })
 
   const login = async (username: string, password: string) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${API_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -43,7 +44,7 @@ export const useAuth = () => useContext(Ctx)
 export function useApi() {
   const { auth } = useAuth()
   return (url: string, options: RequestInit = {}) =>
-    fetch(url, {
+    fetch(`${API_URL}${url}`, {
       ...options,
       headers: {
         'Content-Type': 'application/json',

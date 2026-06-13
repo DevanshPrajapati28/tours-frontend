@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
+import { API_URL } from '../config'
 import { useSearchParams } from 'react-router-dom'
 import { Search, SlidersHorizontal } from 'lucide-react'
 import PageHero from '../components/PageHero'
@@ -13,7 +14,7 @@ export default function PackagesPage() {
   const [packages, setPackages] = useState<Package[]>([])
 
   useEffect(() => {
-    fetch('/api/packages').then(r => r.json()).then(setPackages)
+    fetch(`${API_URL}/api/packages`).then(r => r.json()).then(setPackages)
   }, [])
 
   const types = useMemo(() => ['All', ...Array.from(new Set(packages.map(p => p.type)))], [packages])

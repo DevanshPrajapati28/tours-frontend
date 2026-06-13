@@ -1,5 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { API_URL } from '../config'
 import { Clock, MapPin, Star, CheckCircle2, X, ArrowRight } from 'lucide-react'
 import { inr } from '../data'
 import type { Package } from '../data'
@@ -15,14 +16,14 @@ export default function PackageDetailPage() {
 
   useEffect(() => {
     setLoading(true)
-    fetch(`/api/packages/${slug}`)
+    fetch(`${API_URL}/api/packages/${slug}`)
       .then(r => {
         if (!r.ok) throw new Error('Not found')
         return r.json()
       })
       .then(data => {
         setPkg(data)
-        return fetch(`/api/packages?region=${data.region}`)
+        return fetch(`${API_URL}/api/packages?region=${data.region}`)
       })
       .then(r => r.json())
       .then(data => {

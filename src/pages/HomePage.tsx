@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { API_URL } from '../config'
 import baliImg from '../assets/bali.jpg'
 import maldivesImg from '../assets/maldives.jpg'
 import switzerlandImg from '../assets/switzerland.jpg'
@@ -86,8 +87,8 @@ export default function HomePage() {
   const popularSectionRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    fetch('/api/packages/featured').then(r => r.json()).then(setFeatured)
-    fetch('/api/destinations').then(r => r.json()).then(data => setPopularDest(Array.isArray(data) ? data.slice(0, 4) : []))
+    fetch(`${API_URL}/api/packages/featured`).then(r => r.json()).then(setFeatured)
+    fetch(`${API_URL}/api/destinations`).then(r => r.json()).then(data => setPopularDest(Array.isArray(data) ? data.slice(0, 4) : []))
   }, [])
 
   useEffect(() => {
@@ -117,7 +118,7 @@ export default function HomePage() {
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
-    await fetch('/api/newsletter/subscribe', {
+    await fetch(`${API_URL}/api/newsletter/subscribe`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })

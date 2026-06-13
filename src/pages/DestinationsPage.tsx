@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { API_URL } from '../config'
 import type { Destination } from '../data'
 import PageHero from '../components/PageHero'
 import DestinationCard from '../components/DestinationCard'
@@ -7,7 +8,7 @@ export default function DestinationsPage() {
   const [destinations, setDestinations] = useState<Destination[]>([])
 
   useEffect(() => {
-    fetch('/api/destinations').then(r => r.json()).then(setDestinations)
+    fetch(`${API_URL}/api/destinations`).then(r => r.json()).then(setDestinations)
   }, [])
 
   const domestic = destinations.filter(d => d.region === 'Domestic')

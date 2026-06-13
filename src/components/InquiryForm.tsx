@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { API_URL } from '../config'
 import { Send, CheckCircle2 } from 'lucide-react'
 
 type Props = { defaultSubject?: string; compact?: boolean }
@@ -15,7 +16,7 @@ export default function InquiryForm({ defaultSubject = '', compact = false }: Pr
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
-      await fetch('/api/inquiries', {
+      await fetch(`${API_URL}/api/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ subject: defaultSubject, ...form }),
