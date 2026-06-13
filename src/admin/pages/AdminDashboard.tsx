@@ -20,8 +20,13 @@ type Stats = {
   totalSubscribers: number
 }
 
-
-type Inquiry = { id: string; name: string; subject: string; status: string; createdAt: string }
+type Inquiry = {
+  id: string
+  name: string
+  subject: string
+  status: 'new' | 'read' | 'resolved'
+  createdAt: string
+}
 const StatusIcon = {
   new: Clock,
   read: Star,
