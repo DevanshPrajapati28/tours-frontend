@@ -10,7 +10,8 @@ export default function GalleryPage() {
   const filtered = active === 'All' ? galleryImages : galleryImages.filter(img => img.category === active)
   return (
     <main>
-      <PageHero crumb="Gallery" title="Moments From Our Travelers" subtitle="A collection of magical memories from across the world, captured by our happy travelers." />
+      <PageHero crumb="Gallery" title="Moments From Our Travelers" subtitle="A collection of magical memories from across the world, captured by our happy travelers." image="/images/trekking2.jpg" />
+
       <div className="container" style={{ paddingBlock: '3rem' }}>
         {/* Filters */}
         <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2rem' }}>

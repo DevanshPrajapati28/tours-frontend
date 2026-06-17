@@ -13,7 +13,7 @@ export default function PageHero({ title, subtitle, crumb, image }: Props) {
       {image && (
         <>
           <img src={image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(15,76,129,.85), rgba(15,76,129,.6))' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,.35))' }} />
         </>
       )}
       {/* Decorative blobs */}

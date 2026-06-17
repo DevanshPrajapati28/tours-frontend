@@ -5,7 +5,8 @@ import PageHero from '../components/PageHero'
 export default function BlogPage() {
   return (
     <main>
-      <PageHero crumb="Blog" title="Tips, Guides & Travel Inspiration" subtitle="Expert advice, destination guides, and travel stories to fuel your wanderlust." />
+      <PageHero crumb="Blog" title="Tips, Guides & Travel Inspiration" subtitle="Expert advice, destination guides, and travel stories to fuel your wanderlust." image="/images/tips6.jpg" />
+
       <div className="container" style={{ paddingBlock: '3rem' }}>
         <div className="grid-3">
           {blogPosts.map(post => (

@@ -27,6 +27,11 @@ export default function PackagesPage() {
       return matchType && matchQ
     })
     list = [...list].sort((a, b) => {
+      // Primary sort: Domestic before International
+      if (a.region === 'Domestic' && b.region !== 'Domestic') return -1;
+      if (a.region !== 'Domestic' && b.region === 'Domestic') return 1;
+      
+      // Secondary sort: by the selected sort option
       if (sort === 'price-low') return a.discountPrice - b.discountPrice
       if (sort === 'price-high') return b.discountPrice - a.discountPrice
       if (sort === 'rating') return b.rating - a.rating
@@ -37,7 +42,7 @@ export default function PackagesPage() {
 
   return (
     <main>
-      <PageHero crumb="Packages" title="Find Your Perfect Getaway" subtitle="Handpicked itineraries across the globe, crafted by travel experts." image="/images/dest-switzerland.png" />
+      <PageHero crumb="Packages" title="Find Your Perfect Getaway" subtitle="Handpicked itineraries across the globe, crafted by travel experts." image="/images/goa.jpg" />
       <div className="container" style={{ paddingBlock: '3rem' }}>
         {/* Filters */}
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', borderRadius: 16, border: '1px solid var(--border)', background: 'var(--card)', padding: '1rem', alignItems: 'center', boxShadow: 'var(--shadow-sm)' }}>

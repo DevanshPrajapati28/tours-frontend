@@ -321,7 +321,7 @@ export default function ServicesPage() {
         crumb="Services"
         title="Everything You Need for the Perfect Trip"
         subtitle="A complete suite of travel services under one trusted roof."
-        image="/images/dest-dubai.png"
+        image="/images/nyc8.jpg"
       />
 
       <section className="section">
