@@ -35,9 +35,9 @@ const iconMap: Record<string, React.ElementType> = {
 
 const quickCategories = [
   { icon: Compass, label: 'Tours & Experiences', to: '/packages', bg: 'rgba(255,107,53,0.85)', border: 'rgba(255,140,80,0.6)' },
-  { icon: Building2, label: 'Hotels', to: '/hotels', bg: 'rgba(99,102,241,0.85)', border: 'rgba(129,140,248,0.6)' },
-  { icon: Plane, label: 'Transport', to: '/transport', bg: 'rgba(16,185,129,0.85)', border: 'rgba(52,211,153,0.6)' },
-  { icon: Car, label: 'Car Rentals', to: '/car-rentals', bg: 'rgba(245,158,11,0.85)', border: 'rgba(251,191,36,0.6)' },
+  // { icon: Building2, label: 'Hotels', to: '/hotels', bg: 'rgba(99,102,241,0.85)', border: 'rgba(129,140,248,0.6)' },
+  { icon: Plane, label: 'Destinations', to: '/destinations', bg: 'rgba(16,185,129,0.85)', border: 'rgba(52,211,153,0.6)' },
+  // { icon: Car, label: 'Car Rentals', to: '/car-rentals', bg: 'rgba(245,158,11,0.85)', border: 'rgba(251,191,36,0.6)' },
   { icon: BadgePercent, label: 'Offers', to: '/offers', bg: 'rgba(236,72,153,0.85)', border: 'rgba(244,114,182,0.6)' },
   { icon: LayoutGrid, label: 'All', to: '/packages', bg: 'rgba(14,165,233,0.85)', border: 'rgba(56,189,248,0.6)' },
 ]
@@ -466,13 +466,26 @@ export default function HomePage() {
             <SectionHeading eyebrow="Popular Destinations" title="Where to Next?" description="From tropical beaches to alpine peaks, discover destinations that inspire." align="left" />
             <Link to="/destinations" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '.875rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none', flexShrink: 0 }}>See more <ArrowRight size={16} /></Link>
           </div>
-          <div className="dest-scroll" style={{ marginTop: '2rem', display: 'flex', gap: '1rem', overflowX: 'auto', paddingBottom: '.75rem', scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
-            {popularDest.map(dest => (
-              <div key={dest.slug} className="pop-destination-card" style={{ flex: '0 0 200px', scrollSnapAlign: 'start', transition: 'transform .3s ease' }}>
-                <DestinationCard dest={dest} />
-              </div>
-            ))}
-          </div>
+          <div className="dest-scroll" style={{ 
+  marginTop: '2rem', 
+  display: 'flex', 
+  gap: '1rem', 
+  overflowX: 'auto', 
+  paddingBottom: '.75rem', 
+  scrollSnapType: 'x mandatory', 
+  WebkitOverflowScrolling: 'touch',
+  alignItems: 'stretch',
+}}>
+  {popularDest.map(dest => (
+    <div key={dest.slug} className="pop-destination-card" style={{ 
+      flex: '0 0 200px',       // ← width
+      scrollSnapAlign: 'start',
+      height: '280px',         // ← taller
+    }}>
+      <DestinationCard dest={dest} />
+    </div>
+  ))}
+</div>
         </div>
         <style>{`
           .pop-destination-card:hover { transform: translateY(-6px) !important; }
@@ -764,7 +777,7 @@ export default function HomePage() {
             </div>
 
             {/* ── CTA button ── */}
-            <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
+            {/* <div style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
               <Link
                 ref={buttonRef}
                 to="/testimonials"
@@ -774,7 +787,7 @@ export default function HomePage() {
               >
                 Read 15K+ Reviews <ArrowRight size={16} />
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -943,9 +956,93 @@ export default function HomePage() {
     @media (max-width: 900px) {
       .inclusions-grid { grid-template-columns: repeat(2, 1fr) !important; }
     }
-    @media (max-width: 580px) {
-      .inclusions-grid { grid-template-columns: 1fr !important; }
-    }
+    // @media (max-width: 580px) {
+    //   .inclusions-grid { grid-template-columns: 1fr !important; }
+    // }
+    @media (max-width: 767px) {
+
+          /* ── Container padding ── */
+          .container { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+          /* ── Hero ── */
+          .hero-content { padding-top: 3rem !important; padding-bottom: 1.5rem !important; }
+
+          /* Search bar: stack vertically */
+          .hero-search-form {
+            flex-direction: column !important;
+            border-radius: 16px !important;
+            padding: .75rem !important;
+            align-items: stretch !important;
+          }
+          .hero-search-form button { width: 100% !important; justify-content: center !important; border-radius: 12px !important; }
+
+          /* Quick category icons: tighter wrap */
+          .hero-categories { gap: .6rem !important; }
+          .hero-categories a { width: 70px !important; }
+          .hero-categories span[style] { width: 50px !important; height: 50px !important; }
+
+          /* ── Trust strip ── */
+          .section.trust-strip { padding: 1rem 0 !important; }
+
+          /* ── Offers ── */
+          .offers-row { grid-template-columns: 1fr !important; }
+          .offers-row .offer-banner { height: 150px !important; }
+          .offers-row .offer-promo { grid-column: span 1 !important; height: 120px !important; }
+
+          /* ── Dense (trending) cards: horizontal pill layout ── */
+          .dense-card-row { grid-template-columns: 1fr !important; gap: .875rem !important; }
+          .dense-card { flex-direction: row !important; height: 116px !important; }
+          .dense-card > div:first-child { width: 116px !important; min-width: 116px !important; height: 100% !important; flex-shrink: 0 !important; }
+          .dense-card > div:last-child { padding: .7rem .8rem !important; }
+          .dense-card h3 { font-size: .875rem !important; }
+          .dense-card > div:last-child > div:last-child { padding-top: .5rem !important; }
+
+          /* ── Popular destinations ── */
+          // .pop-destination-card { flex: 0 0 148px !important; }
+          /* change to: */
+.pop-destination-card { flex: 0 0 175px !important; height: 250px !important; }
+/* and in 480px breakpoint: */
+.pop-destination-card { flex: 0 0 155px !important; height: 220px !important; }
+
+          /* ── Departure cities ── */
+          .city-cards-grid { grid-template-columns: 1fr 1fr !important; }
+          .city-depart-card { padding: .875rem !important; }
+          .city-depart-card h3 { font-size: 1.0625rem !important; }
+          .city-depart-card svg { width: 48px !important; height: 36px !important; }
+
+          /* ── Dark about card ── */
+          .dark-intro-card { padding: 1.75rem 1.1rem !important; border-radius: 18px !important; }
+          .intro-stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: .75rem !important; }
+          .intro-reviews-grid { grid-template-columns: 1fr !important; }
+
+          /* ── Inclusions ── */
+          .inclusions-grid { grid-template-columns: 1fr !important; row-gap: 1.5rem !important; }
+
+          /* ── Gallery ── */
+          .gallery-grid { grid-template-columns: repeat(3, 1fr) !important; gap: .4rem !important; }
+
+          /* ── Blog / Featured grids ── */
+          .grid-3 { grid-template-columns: 1fr !important; }
+          .grid-4 { grid-template-columns: 1fr !important; }
+
+          /* ── Newsletter ── */
+          .newsletter-inner { padding: 2rem 1.1rem !important; border-radius: 18px !important; }
+          .newsletter-form { flex-direction: column !important; }
+          .newsletter-form input,
+          .newsletter-form button { width: 100% !important; }
+
+          /* ── Section spacing ── */
+          .section { padding-top: 2.25rem !important; padding-bottom: 2.25rem !important; }
+          .section-alt { padding-top: 2.25rem !important; padding-bottom: 2.25rem !important; }
+        }
+
+        /* Extra small: city cards single column */
+        @media (max-width: 480px) {
+          .city-cards-grid { grid-template-columns: 1fr !important; }
+          .dense-card > div:first-child { width: 100px !important; min-width: 100px !important; }
+          .pop-destination-card { flex: 0 0 130px !important; }
+        }
+      
   `}</style>
       </section>
       {/* ═══════════════════════════════════════════════
