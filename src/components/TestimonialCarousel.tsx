@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react'
 import { testimonials } from '../data'
 
@@ -8,6 +8,13 @@ export default function TestimonialCarousel() {
   const active = testimonials[index]
   const prev = () => setIndex(i => (i - 1 + total) % total)
   const next = () => setIndex(i => (i + 1) % total)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex(i => (i + 1) % total)
+    }, 3000)
+    return () => clearInterval(timer)
+  }, [index, total])
 
   return (
     <div style={{ maxWidth: '48rem', marginInline: 'auto', marginTop: '2.5rem' }}>

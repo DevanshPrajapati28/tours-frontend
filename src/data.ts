@@ -265,7 +265,7 @@ export type Destination = {
   name: string
   country: string
   state: string
-  region: 'Domestic' | 'International'
+  region: 'Domestic' | 'International' | 'Honeymoon'
   description: string
   image: string
   bestTime: string

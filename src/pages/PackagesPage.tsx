@@ -23,14 +23,27 @@ export default function PackagesPage() {
     let list = packages.filter(p => {
       const matchType = type === 'All' || p.type === type
       const q = query.trim().toLowerCase()
-      const matchQ = !q || p.name.toLowerCase().includes(q) || p.destination.toLowerCase().includes(q) || p.country.toLowerCase().includes(q)
+      let matchQ = !q || p.name.toLowerCase().includes(q) || p.destination.toLowerCase().includes(q) || p.country.toLowerCase().includes(q)
+
+      // Support 'rajasthan' queries mapping to Jaipur/Jodhpur/Udaipur packages
+      if (q === 'rajasthan') {
+        const lowerName = p.name.toLowerCase()
+        const lowerDest = p.destination.toLowerCase()
+        if (
+          lowerName.includes('jaipur') || lowerName.includes('jodhpur') || lowerName.includes('udaipur') || lowerName.includes('rajasthan') ||
+          lowerDest.includes('jaipur') || lowerDest.includes('jodhpur') || lowerDest.includes('udaipur') || lowerDest.includes('rajasthan')
+        ) {
+          matchQ = true
+        }
+      }
+
       return matchType && matchQ
     })
     list = [...list].sort((a, b) => {
       // Primary sort: Domestic before International
       if (a.region === 'Domestic' && b.region !== 'Domestic') return -1;
       if (a.region !== 'Domestic' && b.region === 'Domestic') return 1;
-      
+
       // Secondary sort: by the selected sort option
       if (sort === 'price-low') return a.discountPrice - b.discountPrice
       if (sort === 'price-high') return b.discountPrice - a.discountPrice
