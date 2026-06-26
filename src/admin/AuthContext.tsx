@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react'
 import { API_URL } from '../config'
 
 type AuthState = { token: string; username: string } | null
@@ -43,13 +43,23 @@ export const useAuth = () => useContext(Ctx)
 /** Authenticated fetch helper */
 export function useApi() {
   const { auth } = useAuth()
-  return (url: string, options: RequestInit = {}) =>
-    fetch(`${API_URL}${url}`, {
+  const token = auth?.token ?? ''
+  
+  return useCallback((url: string, options: RequestInit = {}) => {
+    const isFormData = options.body instanceof FormData
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${token}`,
+    }
+    if (!isFormData) {
+      headers['Content-Type'] = 'application/json'
+    }
+
+    return fetch(`${API_URL}${url}`, {
       ...options,
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${auth?.token ?? ''}`,
+        ...headers,
         ...(options.headers ?? {}),
       },
     })
+  }, [token])
 }

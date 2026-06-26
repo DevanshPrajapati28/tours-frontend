@@ -8,6 +8,7 @@ import ContactPage from './pages/ContactPage'
 import AboutPage from './pages/AboutPage'
 import GalleryPage from './pages/GalleryPage'
 import BlogPage from './pages/BlogPage'
+import BlogDetailPage from './pages/BlogDetailPage'
 import ServicesPage from './pages/ServicesPage'
 import NotFoundPage from './pages/NotFoundPage'
 
@@ -20,6 +21,8 @@ import AdminPackages from './admin/pages/AdminPackages'
 import AdminDestinations from './admin/pages/AdminDestinations'
 import AdminInquiries from './admin/pages/AdminInquiries'
 import AdminSubscribers from './admin/pages/AdminSubscribers'
+import AdminBlogs from './admin/pages/AdminBlogs'
+import AdminGallery from './admin/pages/AdminGallery'
 
 function ProtectedAdminRoute({ children }: { children: JSX.Element }) {
   const { auth } = useAuth()
@@ -49,6 +52,7 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogDetailPage />} />
             {/* Catch-all */}
             <Route path="*" element={<NotFoundPage />} />
           </Route>
@@ -61,6 +65,8 @@ export default function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="packages" element={<AdminPackages />} />
             <Route path="destinations" element={<AdminDestinations />} />
+            <Route path="blogs" element={<AdminBlogs />} />
+            <Route path="gallery" element={<AdminGallery />} />
             <Route path="inquiries" element={<AdminInquiries />} />
             <Route path="subscribers" element={<AdminSubscribers />} />
           </Route>

@@ -1,13 +1,25 @@
-import { useState } from 'react'
-import { galleryImages } from '../data'
+import { useState, useEffect } from 'react'
+import { API_URL } from '../config'
 import PageHero from '../components/PageHero'
 
-const cats = ['All', 'Domestic Tours', 'International Tours', 'Honeymoon Tours', 'Family Tours'] as const
-type Cat = typeof cats[number]
+type GalleryImage = { id: string; src: string; title: string; category: string }
 
 export default function GalleryPage() {
-  const [active, setActive] = useState<Cat>('All')
+  const [active, setActive] = useState('All')
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/gallery`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setGalleryImages(data)
+      })
+      .catch(console.error)
+  }, [])
+
+  const categories = ['All', ...new Set(galleryImages.map(img => img.category))]
   const filtered = active === 'All' ? galleryImages : galleryImages.filter(img => img.category === active)
+
   return (
     <main>
       <PageHero crumb="Gallery" title="Moments From Our Travelers" subtitle="A collection of magical memories from across the world, captured by our happy travelers." image="/images/trekking2.jpg" />
@@ -15,7 +27,7 @@ export default function GalleryPage() {
       <div className="container" style={{ paddingBlock: '3rem' }}>
         {/* Filters */}
         <div style={{ display: 'flex', gap: '.5rem', flexWrap: 'wrap', justifyContent: 'center', marginBottom: '2rem' }}>
-          {cats.map(c => (
+          {categories.map(c => (
             <button key={c} onClick={() => setActive(c)} style={{
               padding: '.5rem 1.25rem', borderRadius: 9999, fontSize: '.875rem', fontWeight: 500, border: 'none', cursor: 'pointer', transition: 'all .2s',
               background: active === c ? 'var(--primary)' : 'var(--secondary)',

@@ -47,8 +47,16 @@ const socials = [
 
 export default function SiteFooter() {
   return (
-    <footer style={{ background: 'var(--primary)', color: 'var(--primary-fg)' }}>
-      <div className="container footer-container" style={{ paddingBlock: '3.5rem' }}>
+    <footer style={{ 
+      position: 'relative',
+      color: '#ffffff',
+      backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.9)), url("/images/hero-maldives.png")`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center 60%',
+      backgroundRepeat: 'no-repeat',
+      borderTop: '4px solid var(--accent)'
+    }}>
+      <div className="container footer-container" style={{ paddingBlock: '2.5rem', position: 'relative', zIndex: 1 }}>
 
         {/* ── Main grid ── */}
         <div className="footer-grid">
@@ -71,11 +79,11 @@ export default function SiteFooter() {
               </span>
             </Link>
 
-            <p style={{ marginTop: '1rem', fontSize: '.875rem', lineHeight: 1.7, color: 'rgba(255,255,255,.7)' }}>
+            <p style={{ marginTop: '1rem', fontSize: '1rem', lineHeight: 1.7, color: 'rgba(255,255,255,.8)' }}>
               Crafting unforgettable journeys across the globe. From dreamy honeymoons to family adventures, we turn your travel dreams into reality.
             </p>
 
-            <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '.5rem', fontSize: '.875rem', color: 'rgba(255,255,255,.8)' }}>
+            <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '.5rem', fontSize: '0.95rem', color: 'rgba(255,255,255,.9)' }}>
               <p style={{ display: 'flex', alignItems: 'flex-start', gap: '.5rem', margin: 0 }}>
                 <MapPin size={16} style={{ flexShrink: 0, marginTop: 2, color: 'var(--accent)' }} />
                 {COMPANY.address}
@@ -95,7 +103,7 @@ export default function SiteFooter() {
           <div className="footer-nav-cols">
             {footerNav.map(col => (
               <div key={col.title} className="footer-nav-col">
-                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontWeight: 600, margin: 0 }}>
+                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, margin: 0 }}>
                   {col.title}
                 </h3>
                 <ul style={{ marginTop: '1rem', listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '.625rem' }}>
@@ -103,9 +111,9 @@ export default function SiteFooter() {
                     <li key={l.label}>
                       <Link
                         to={l.href}
-                        style={{ fontSize: '.875rem', color: 'rgba(255,255,255,.7)', textDecoration: 'none', transition: 'color .2s' }}
+                        style={{ fontSize: '1rem', color: 'rgba(255,255,255,.8)', textDecoration: 'none', transition: 'color .2s' }}
                         onMouseEnter={e => (e.currentTarget.style.color = 'var(--accent)')}
-                        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.7)')}
+                        onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,.8)')}
                       >
                         {l.label}
                       </Link>
@@ -118,11 +126,23 @@ export default function SiteFooter() {
         </div>
 
         {/* ── Bottom bar ── */}
-        <div className="footer-bottom">
-          <p style={{ fontSize: '.75rem', color: 'rgba(255,255,255,.6)', margin: 0 }}>
+        <div className="footer-bottom" style={{ marginTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/terms" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Terms of Use</Link>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>|</span>
+            <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Privacy Policy</Link>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>|</span>
+            <Link to="/contact" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Contact Us</Link>
+            <span style={{ color: 'rgba(255,255,255,0.4)' }}>|</span>
+            <Link to="/help" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Help</Link>
+          </div>
+
+          <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,.7)', margin: 0, textAlign: 'center', fontWeight: 500 }}>
             &copy; {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
           </p>
-          <div style={{ display: 'flex', gap: '.75rem' }}>
+          
+          <div style={{ display: 'flex', gap: '.75rem', marginTop: '0.5rem' }}>
             {socials.map(({ Icon, label }) => (
               <a
                 key={label}
@@ -130,11 +150,11 @@ export default function SiteFooter() {
                 aria-label={label}
                 style={{
                   width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  borderRadius: 9999, background: 'rgba(255,255,255,.1)', color: 'rgba(255,255,255,.8)',
+                  borderRadius: 9999, background: 'rgba(255,255,255,.15)', color: 'rgba(255,255,255,.9)',
                   transition: 'all .2s', textDecoration: 'none',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'var(--accent)'; e.currentTarget.style.color = '#fff' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.1)'; e.currentTarget.style.color = 'rgba(255,255,255,.8)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,.15)'; e.currentTarget.style.color = 'rgba(255,255,255,.9)' }}
               >
                 <Icon />
               </a>
@@ -205,11 +225,11 @@ export default function SiteFooter() {
           }
 
           .footer-nav-col h3 {
-            font-size: .9375rem !important;
+            font-size: 1.1rem !important;
           }
 
           .footer-nav-col li a {
-            font-size: .8125rem !important;
+            font-size: 0.95rem !important;
           }
 
           .footer-bottom {

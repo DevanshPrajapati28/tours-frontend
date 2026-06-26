@@ -1,8 +1,28 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { blogPosts } from '../data'
 import PageHero from '../components/PageHero'
+import { API_URL } from '../config'
+
+type BlogPost = {
+  slug: string
+  title: string
+  excerpt: string
+  category: string
+  date: string
+  readTime: string
+  image: string
+  author: string
+}
 
 export default function BlogPage() {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([])
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/blogs`)
+      .then(r => r.json())
+      .then(setBlogPosts)
+  }, [])
+
   return (
     <main>
       <PageHero crumb="Blog" title="Tips, Guides & Travel Inspiration" subtitle="Expert advice, destination guides, and travel stories to fuel your wanderlust." image="/images/tips6.jpg" />

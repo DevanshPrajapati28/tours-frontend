@@ -29,10 +29,10 @@ export default function AdminInquiries() {
 
   const load = useCallback(() => {
     setLoading(true)
-    api('/api/admin/inquiries').then(r => r.json()).then(data => {
+    api(`/api/admin/inquiries?t=${Date.now()}`).then(r => r.json()).then(data => {
       setInquiries(Array.isArray(data) ? data : [])
     }).finally(() => setLoading(false))
-  }, [])
+  }, [api])
 
   useEffect(() => { load() }, [load])
 

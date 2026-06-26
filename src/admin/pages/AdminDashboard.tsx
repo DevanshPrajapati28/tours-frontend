@@ -28,13 +28,13 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     Promise.all([
-      api('/api/admin/stats').then(r => r.json()),
-      api('/api/admin/inquiries').then(r => r.json()),
+      api(`/api/admin/stats?t=${Date.now()}`).then(r => r.json()),
+      api(`/api/admin/inquiries?t=${Date.now()}`).then(r => r.json()),
     ]).then(([s, inq]) => {
       setStats(s)
       setInquiries(Array.isArray(inq) ? inq.slice(0, 5) : [])
     }).finally(() => setLoading(false))
-  }, [])
+  }, [api])
 
   const statusColor: Record<string, string> = { new: '#ff6b35', read: '#0f4c81', resolved: '#16a34a' }
   const statusBg:    Record<string, string> = { new: 'rgba(255,107,53,.1)', read: 'rgba(15,76,129,.1)', resolved: 'rgba(22,163,74,.1)' }

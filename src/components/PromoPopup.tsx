@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, User, Phone, Users, Map, CheckCircle2, Mail } from 'lucide-react';
 import logoImg from '../assets/new_logo.png';
 import bgImg from '../assets/new1.jpg'; // Using Bali/Hero image for the left panel
+import { API_URL } from '../config';
 
 export default function PromoPopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,9 +38,9 @@ export default function PromoPopup() {
       subject: formData.get('tourType'),
       message: formData.get('visit_office') ? 'User wants to visit the office.' : 'New Popup Inquiry',
     };
-    
+
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/inquiries`, {
+      await fetch(`${API_URL}/api/inquiries`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -76,8 +77,9 @@ export default function PromoPopup() {
         borderRadius: 24,
         overflow: 'hidden',
         width: '100%',
-        maxWidth: 900,
-        minHeight: 500,
+        maxWidth: 800,
+        minHeight: 450,
+        maxHeight: '90vh',
         display: 'flex',
         position: 'relative',
         boxShadow: '0 24px 50px rgba(0,0,0,0.4)',
@@ -116,11 +118,11 @@ export default function PromoPopup() {
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(15,76,129,0.9), transparent)' }} />
-          <div style={{ position: 'absolute', bottom: 30, left: 30, right: 30, color: '#fff' }}>
-            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 800, lineHeight: 1.2 }}>
+          <div style={{ position: 'absolute', bottom: 20, left: 20, right: 20, color: '#fff' }}>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 800, lineHeight: 1.2 }}>
               Your Dream Trip Awaits
             </h3>
-            <p style={{ marginTop: '0.5rem', fontSize: '0.875rem', opacity: 0.9 }}>
+            <p style={{ marginTop: '0.4rem', fontSize: '0.85rem', opacity: 0.9 }}>
               Discover the world's most breathtaking destinations with us.
             </p>
           </div>
@@ -129,21 +131,22 @@ export default function PromoPopup() {
         {/* Right Panel (Form) */}
         <div style={{
           flex: 1,
-          padding: window.innerWidth < 768 ? '2rem' : '3rem',
+          padding: window.innerWidth < 768 ? '1.5rem' : '2rem',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
           textAlign: 'center',
-          minWidth: 0 // Prevents flex child from blowing out parent width
+          minWidth: 0, // Prevents flex child from blowing out parent width
+          overflowY: 'auto'
         }}>
 
-          <img src={logoImg} alt="Book My Dream" style={{ height: 60, objectFit: 'contain', marginBottom: '1rem' }} />
+          <img src={logoImg} alt="Book My Dream" style={{ height: 45, objectFit: 'contain', marginBottom: '0.5rem' }} />
 
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', fontWeight: 800, color: 'var(--fg)', marginBottom: '0.5rem' }}>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 800, color: 'var(--fg)', marginBottom: '0.25rem' }}>
             Plan Your Perfect Trip
           </h2>
-          <p style={{ color: 'var(--muted-fg)', fontSize: '0.95rem', maxWidth: '85%', marginBottom: '2rem' }}>
+          <p style={{ color: 'var(--muted-fg)', fontSize: '0.85rem', maxWidth: '90%', marginBottom: '1rem' }}>
             Get a <strong style={{ color: 'var(--accent)' }}>FREE</strong> personalized itinerary with the best prices from our travel experts.
           </p>
 
@@ -155,16 +158,16 @@ export default function PromoPopup() {
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ width: '100%', textAlign: 'left' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem', width: '100%' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginBottom: '1rem', width: '100%' }}>
 
                 {/* Full Name */}
                 <div style={{ minWidth: 0 }}>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--fg)', marginBottom: '0.4rem' }}>Full Name *</label>
                   <div style={{ display: 'flex', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: '#f9fafb', width: '100%' }}>
-                    <div style={{ padding: '0.75rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <User size={18} style={{ color: 'var(--primary)' }} />
+                    <div style={{ padding: '0.6rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <User size={16} style={{ color: 'var(--primary)' }} />
                     </div>
-                    <input required name="name" type="text" placeholder="Enter Your Name" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.75rem', background: 'transparent', outline: 'none', fontSize: '0.9rem' }} />
+                    <input required name="name" type="text" placeholder="Enter Your Name" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.6rem', background: 'transparent', outline: 'none', fontSize: '0.85rem' }} />
                   </div>
                 </div>
 
@@ -172,10 +175,10 @@ export default function PromoPopup() {
                 <div style={{ minWidth: 0 }}>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--fg)', marginBottom: '0.4rem' }}>Phone Number *</label>
                   <div style={{ display: 'flex', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: '#f9fafb', width: '100%' }}>
-                    <div style={{ padding: '0.75rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Phone size={18} style={{ color: 'var(--primary)' }} />
+                    <div style={{ padding: '0.6rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Phone size={16} style={{ color: 'var(--primary)' }} />
                     </div>
-                    <input required name="phone" type="tel" placeholder="Enter Phone Number" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.75rem', background: 'transparent', outline: 'none', fontSize: '0.9rem' }} />
+                    <input required name="phone" type="tel" placeholder="Enter Phone Number" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.6rem', background: 'transparent', outline: 'none', fontSize: '0.85rem' }} />
                   </div>
                 </div>
 
@@ -183,10 +186,10 @@ export default function PromoPopup() {
                 <div style={{ gridColumn: 'span 2', minWidth: 0 }}>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--fg)', marginBottom: '0.4rem' }}>Email Address *</label>
                   <div style={{ display: 'flex', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: '#f9fafb', width: '100%' }}>
-                    <div style={{ padding: '0.75rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Mail size={18} style={{ color: 'var(--primary)' }} />
+                    <div style={{ padding: '0.6rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Mail size={16} style={{ color: 'var(--primary)' }} />
                     </div>
-                    <input required name="email" type="email" placeholder="Enter Your Email" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.75rem', background: 'transparent', outline: 'none', fontSize: '0.9rem' }} />
+                    <input required name="email" type="email" placeholder="Enter Your Email" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.6rem', background: 'transparent', outline: 'none', fontSize: '0.85rem' }} />
                   </div>
                 </div>
 
@@ -194,10 +197,10 @@ export default function PromoPopup() {
                 <div style={{ minWidth: 0 }}>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--fg)', marginBottom: '0.4rem' }}>Number of Travellers *</label>
                   <div style={{ display: 'flex', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: '#f9fafb', width: '100%' }}>
-                    <div style={{ padding: '0.75rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Users size={18} style={{ color: 'var(--primary)' }} />
+                    <div style={{ padding: '0.6rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Users size={16} style={{ color: 'var(--primary)' }} />
                     </div>
-                    <input required name="travelers" type="number" min="1" placeholder="Number of travellers" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.75rem', background: 'transparent', outline: 'none', fontSize: '0.9rem' }} />
+                    <input required name="travelers" type="number" min="1" placeholder="Number of travellers" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.6rem', background: 'transparent', outline: 'none', fontSize: '0.85rem' }} />
                   </div>
                 </div>
 
@@ -205,10 +208,10 @@ export default function PromoPopup() {
                 <div style={{ minWidth: 0 }}>
                   <label style={{ display: 'block', fontSize: '0.8125rem', fontWeight: 600, color: 'var(--fg)', marginBottom: '0.4rem' }}>Tour Type *</label>
                   <div style={{ display: 'flex', border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', background: '#f9fafb', width: '100%' }}>
-                    <div style={{ padding: '0.75rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Map size={18} style={{ color: 'var(--primary)' }} />
+                    <div style={{ padding: '0.6rem', background: '#f1f5f9', borderRight: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Map size={16} style={{ color: 'var(--primary)' }} />
                     </div>
-                    <select required name="tourType" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.75rem', background: 'transparent', outline: 'none', fontSize: '0.9rem', color: 'var(--fg)', appearance: 'none', cursor: 'pointer' }}>
+                    <select required name="tourType" style={{ flex: 1, minWidth: 0, width: '100%', boxSizing: 'border-box', border: 'none', padding: '0.6rem', background: 'transparent', outline: 'none', fontSize: '0.85rem', color: 'var(--fg)', appearance: 'none', cursor: 'pointer' }}>
                       <option value="">Select tour type</option>
                       <option value="domestic">Domestic Tour</option>
                       <option value="international">International Tour</option>
@@ -221,22 +224,22 @@ export default function PromoPopup() {
               </div>
 
               {/* Office Visit Toggle */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', background: '#f8fafc', padding: '1rem', borderRadius: 12 }}>
-                <input type="checkbox" name="visit_office" id="visit_office" style={{ width: 20, height: 20, accentColor: 'var(--accent)', cursor: 'pointer' }} />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem', background: '#f8fafc', padding: '0.75rem 1rem', borderRadius: 12 }}>
+                <input type="checkbox" name="visit_office" id="visit_office" style={{ width: 18, height: 18, accentColor: 'var(--accent)', cursor: 'pointer' }} />
                 <div>
-                  <label htmlFor="visit_office" style={{ display: 'block', fontSize: '0.95rem', fontWeight: 700, color: 'var(--fg)', cursor: 'pointer' }}>I would like to visit your office</label>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--muted-fg)', margin: 0 }}>Schedule a free consultation at our nearest branch</p>
+                  <label htmlFor="visit_office" style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--fg)', cursor: 'pointer' }}>I would like to visit your office</label>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--muted-fg)', margin: 0 }}>Schedule a free consultation at our nearest branch</p>
                 </div>
               </div>
 
               <button type="submit" style={{
                 width: '100%',
-                padding: '1rem',
+                padding: '0.85rem',
                 background: 'var(--accent)',
                 color: '#fff',
                 border: 'none',
                 borderRadius: 12,
-                fontSize: '1.05rem',
+                fontSize: '0.95rem',
                 fontWeight: 700,
                 cursor: 'pointer',
                 boxShadow: '0 4px 14px rgba(255, 107, 53, 0.3)',
@@ -251,7 +254,7 @@ export default function PromoPopup() {
           )}
 
           {/* Footer Text */}
-          <div style={{ marginTop: '1.5rem', fontSize: '0.75rem', color: 'var(--muted-fg)', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+          <div style={{ marginTop: '1rem', fontSize: '0.7rem', color: 'var(--muted-fg)', display: 'flex', gap: '0.75rem', justifyContent: 'center' }}>
             <span>🔒 100% Secure</span>
             <span>• Data Privacy Guaranteed</span>
             <span>• Travel with Confidence</span>

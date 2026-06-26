@@ -1,344 +1,311 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import PageHero from '../components/PageHero'
-import SectionHeading from '../components/SectionHeading'
-import { services } from '../data'
+import { services, galleryImages } from '../data'
 import {
-  MapPin, Globe, Sparkles, Hotel, TrainFront, Ship, FileCheck, BookUser, Users, Briefcase, Plane, Heart
+  MapPin, Globe, Sparkles, Hotel, TrainFront, Ship, FileCheck, BookUser, Users, Briefcase, Plane, Heart, ChevronLeft, ChevronRight
 } from 'lucide-react'
+
+import { API_URL } from '../config'
 
 const iconMap: Record<string, React.ElementType> = {
   MapPin, Globe, Sparkles, Hotel, Plane, TrainFront, Ship, FileCheck, BookUser, Heart, Users, Briefcase,
 }
 
-/* ─── Tilt + glow card ─────────────────────────────────────── */
-function ServiceCard({ svc, index }: { svc: typeof services[0]; index: number }) {
-  const cardRef = useRef<HTMLDivElement>(null)
-  const glowRef = useRef<HTMLDivElement>(null)
-  const [entered, setEntered] = useState(false)
-
-  const Icon = iconMap[svc.icon] ?? Sparkles
-  const num  = String(index + 1).padStart(2, '0')
+export default function ServicesPage() {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [galleryImgs, setGalleryImgs] = useState(galleryImages)
 
   useEffect(() => {
-    const t = setTimeout(() => setEntered(true), index * 75)
-    return () => clearTimeout(t)
-  }, [index])
+    fetch(`${API_URL}/api/gallery`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) setGalleryImgs(data)
+      })
+      .catch(console.error)
+  }, [])
 
-  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const card = cardRef.current
-    const glow = glowRef.current
-    if (!card || !glow) return
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    const cx = rect.width  / 2
-    const cy = rect.height / 2
-    const rotX = ((y - cy) / cy) * -9
-    const rotY = ((x - cx) / cx) *  9
-    card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.035)`
-    glow.style.left    = `${x}px`
-    glow.style.top     = `${y}px`
-    glow.style.opacity = '1'
+  // Autoplay logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (scrollRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+        if (scrollLeft + clientWidth >= scrollWidth - 10) {
+          scrollRef.current.scrollTo({ left: 0, behavior: 'smooth' })
+        } else {
+          let cols = 4
+          if (window.innerWidth <= 768) cols = 1
+          else if (window.innerWidth <= 1024) cols = 2
+          
+          const colWidth = clientWidth / cols
+          scrollRef.current.scrollBy({ left: colWidth, behavior: 'smooth' })
+        }
+      }
+    }, 4500)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Manual Navigation Logic
+  const scrollLeftBtn = () => {
+    if (scrollRef.current) {
+      const clientWidth = scrollRef.current.clientWidth
+      let cols = window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 4
+      const colWidth = clientWidth / cols
+      scrollRef.current.scrollBy({ left: -colWidth, behavior: 'smooth' })
+    }
   }
 
-  function onMouseLeave() {
-    const card = cardRef.current
-    const glow = glowRef.current
-    if (!card || !glow) return
-    card.style.transform   = 'perspective(900px) rotateX(0) rotateY(0) scale(1)'
-    glow.style.opacity     = '0'
+  const scrollRightBtn = () => {
+    if (scrollRef.current) {
+      const clientWidth = scrollRef.current.clientWidth
+      let cols = window.innerWidth <= 768 ? 1 : window.innerWidth <= 1024 ? 2 : 4
+      const colWidth = clientWidth / cols
+      scrollRef.current.scrollBy({ left: colWidth, behavior: 'smooth' })
+    }
+  }
+
+  // Mouse Drag to Scroll Logic
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [scrollLeft, setScrollLeft] = useState(0)
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return
+    setIsDragging(true)
+    setStartX(e.pageX - scrollRef.current.offsetLeft)
+    setScrollLeft(scrollRef.current.scrollLeft)
+    scrollRef.current.style.scrollSnapType = 'none'
+    scrollRef.current.style.cursor = 'grabbing'
+  }
+
+  const handleMouseLeaveOrUp = () => {
+    setIsDragging(false)
+    if (scrollRef.current) {
+      scrollRef.current.style.scrollSnapType = 'x mandatory'
+      scrollRef.current.style.cursor = 'grab'
+    }
+  }
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return
+    e.preventDefault()
+    const x = e.pageX - scrollRef.current.offsetLeft
+    const walk = (x - startX) * 1.5
+    scrollRef.current.scrollLeft = scrollLeft - walk
   }
 
   return (
-    <div
-      ref={cardRef}
-      className={`svc-card${entered ? ' svc-card--in' : ''}`}
-      style={{ '--i': index } as React.CSSProperties}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-    >
-      {/* Cursor-tracked radial glow */}
-      <div ref={glowRef} className="svc-glow" />
-
-      {/* Expanding circle in top-right corner */}
-      <div className="svc-blob" />
-
-      {/* Editorial ghost number */}
-      <span className="svc-ghost" aria-hidden="true">{num}</span>
-
-      {/* Top row: icon + pill */}
-      <div className="svc-top">
-        <span className="svc-icon">
-          <Icon size={20} />
-        </span>
-        <span className="svc-pill">{num}</span>
-      </div>
-
-      <h3 className="svc-title">{svc.title}</h3>
-      <p  className="svc-desc">{svc.description}</p>
-
-      {/* Animated "Explore →" that slides up on hover */}
-      <div className="svc-cta">
-        <span>Explore</span>
-        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-          <path d="M1.5 6.5h10M8 2.5l4 4-4 4"
-            stroke="currentColor" strokeWidth="1.6"
-            strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
-    </div>
-  )
-}
-
-/* ─── Page ──────────────────────────────────────────────────── */
-export default function ServicesPage() {
-  return (
-    <main>
+    <main style={{ position: 'relative', height: '100vh', width: '100%', overflow: 'hidden', background: '#000' }}>
       <style>{`
-        /* ── entrance ── */
-        .svc-card {
-          opacity: 0;
-          transform: translateY(36px) scale(.97);
+        .svc-slider-container {
+          display: flex;
+          height: 100%;
+          width: 100%;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          scroll-behavior: smooth;
+          -ms-overflow-style: none; 
+          scrollbar-width: none; 
+          cursor: grab;
         }
-        .svc-card--in {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-          transition:
-            opacity   .55s cubic-bezier(.22,1,.36,1) calc(var(--i,0) * 75ms),
-            transform .55s cubic-bezier(.22,1,.36,1) calc(var(--i,0) * 75ms);
-        }
-
-        /* ── grid ── */
-        .svc-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 1.125rem;
-          margin-top: 3rem;
-        }
-        /* tall first card */
-        .svc-card:nth-child(1) { grid-row: span 2; }
-        /* wide fourth card */
-        .svc-card:nth-child(4) { grid-column: span 2; }
-
-        @media (max-width: 860px) {
-          .svc-grid { grid-template-columns: repeat(2, 1fr); }
-          .svc-card:nth-child(1),
-          .svc-card:nth-child(4) { grid-row: auto; grid-column: auto; }
-        }
-        @media (max-width: 500px) {
-          .svc-grid { grid-template-columns: 1fr; }
+        .svc-slider-container::-webkit-scrollbar {
+          display: none;
         }
 
-        /* ── card shell ── */
-        .svc-card {
+        .svc-slide {
+          flex: 0 0 25%;
+          height: 100%;
+          scroll-snap-align: start;
           position: relative;
           overflow: hidden;
-          padding: 1.75rem;
-          border-radius: 20px;
-          background: var(--card, #fff);
-          border: 1px solid var(--border, #e5e7eb);
-          cursor: default;
-          will-change: transform;
-        }
-        /* smooth return after tilt */
-        .svc-card--in {
-          transition:
-            opacity   .55s cubic-bezier(.22,1,.36,1) calc(var(--i,0) * 75ms),
-            transform .15s ease,
-            box-shadow .15s ease,
-            border-color .2s ease;
-        }
-        .svc-card:hover {
-          border-color: color-mix(in srgb, var(--primary) 45%, transparent);
-          box-shadow:
-            0 0 0 1px color-mix(in srgb, var(--primary) 18%, transparent),
-            0 24px 64px -16px color-mix(in srgb, var(--primary) 30%, transparent);
-          z-index: 2;
-        }
-
-        /* ── cursor glow ── */
-        .svc-glow {
-          position: absolute;
-          width: 260px;
-          height: 260px;
-          border-radius: 50%;
-          background: radial-gradient(
-            circle,
-            color-mix(in srgb, var(--primary) 16%, transparent) 0%,
-            transparent 70%
-          );
-          transform: translate(-50%, -50%);
-          pointer-events: none;
-          opacity: 0;
-          transition: opacity .35s ease;
-        }
-
-        /* ── expanding blob (top-right) ── */
-        .svc-blob {
-          position: absolute;
-          top: -40px;
-          right: -40px;
-          width: 110px;
-          height: 110px;
-          border-radius: 50%;
-          background: color-mix(in srgb, var(--secondary) 90%, transparent);
-          pointer-events: none;
-          transition: transform .5s cubic-bezier(.22,1,.36,1);
-        }
-        .svc-card:hover .svc-blob {
-          transform: scale(2.8);
-        }
-
-        /* ── ghost number ── */
-        .svc-ghost {
-          position: absolute;
-          bottom: -1.6rem;
-          right: .4rem;
-          font-size: 8.5rem;
-          font-weight: 900;
-          line-height: 1;
-          font-family: var(--font-serif, Georgia, serif);
-          color: transparent;
-          -webkit-text-stroke: 1.5px color-mix(in srgb, var(--primary) 9%, transparent);
-          user-select: none;
-          pointer-events: none;
-          transition:
-            -webkit-text-stroke-color .3s,
-            transform .4s cubic-bezier(.22,1,.36,1);
-        }
-        .svc-card:hover .svc-ghost {
-          -webkit-text-stroke-color: color-mix(in srgb, var(--primary) 20%, transparent);
-          transform: scale(1.07) translateY(-6px);
-        }
-
-        /* ── top row ── */
-        .svc-top {
           display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 1.25rem;
-          position: relative;
-          z-index: 1;
-        }
-
-        .svc-icon {
-          display: flex;
-          width: 46px;
-          height: 46px;
-          align-items: center;
+          align-items: flex-end;
           justify-content: center;
-          border-radius: 13px;
-          background: var(--secondary);
-          color: var(--primary);
-          transition:
-            background .25s,
-            color .25s,
-            transform .4s cubic-bezier(.22,1,.36,1);
-        }
-        .svc-card:hover .svc-icon {
-          background: var(--primary);
-          color: #fff;
-          transform: rotate(-10deg) scale(1.14);
+          padding-bottom: 5rem;
+          border-right: 1px solid rgba(255,255,255,0.05);
+          user-select: none;
         }
 
-        .svc-pill {
-          font-size: .6875rem;
-          font-weight: 700;
-          letter-spacing: .1em;
-          color: var(--primary);
-          background: color-mix(in srgb, var(--primary) 10%, transparent);
-          padding: .2rem .6rem;
-          border-radius: 999px;
-          font-variant-numeric: tabular-nums;
-          transition: background .25s;
+        @media (max-width: 1024px) {
+          .svc-slide { flex: 0 0 50%; }
         }
-        .svc-card:hover .svc-pill {
-          background: color-mix(in srgb, var(--primary) 18%, transparent);
+        @media (max-width: 768px) {
+          .svc-slide { flex: 0 0 100%; }
         }
 
-        /* ── text ── */
-        .svc-title {
-          font-family: var(--font-serif, Georgia, serif);
-          font-size: 1.0625rem;
-          font-weight: 600;
-          line-height: 1.3;
-          margin: 0 0 .5rem;
-          position: relative;
+        .svc-slide-bg {
+          position: absolute;
+          inset: 0;
+          background-size: cover;
+          background-position: center;
           z-index: 1;
+          transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .svc-card:nth-child(1) .svc-title { font-size: 1.35rem; }
-        .svc-card:nth-child(4) .svc-title { font-size: 1.2rem; }
-
-        .svc-desc {
-          font-size: .875rem;
-          color: var(--muted-fg, #6b7280);
-          line-height: 1.65;
-          margin: 0 0 1.5rem;
-          position: relative;
-          z-index: 1;
+        .svc-slide:hover .svc-slide-bg {
+          transform: scale(1.05);
         }
 
-        /* ── animated CTA ── */
-        .svc-cta {
-          display: flex;
-          align-items: center;
-          gap: .35rem;
-          font-size: .8125rem;
-          font-weight: 600;
-          letter-spacing: .02em;
-          color: var(--primary);
-          opacity: 0;
-          transform: translateY(8px);
-          transition: opacity .25s ease, transform .25s ease;
-          position: relative;
-          z-index: 1;
+        .svc-slide-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0) 100%);
+          z-index: 2;
+          pointer-events: none;
         }
-        .svc-card:hover .svc-cta {
-          opacity: 1;
+
+        .svc-slide-content {
+          position: relative;
+          z-index: 3;
+          text-align: center;
+          color: white;
+          padding: 0 2rem;
+          transform: translateY(30px);
+          transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          width: 100%;
+        }
+        .svc-slide:hover .svc-slide-content {
           transform: translateY(0);
         }
-        .svc-cta svg {
-          transition: transform .25s ease;
+
+        .svc-icon-wrapper {
+          width: 64px;
+          height: 64px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.1);
+          backdrop-filter: blur(8px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 1.5rem;
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.2);
+          transition: all 0.4s ease;
         }
-        .svc-card:hover .svc-cta svg {
-          transform: translateX(4px);
+        .svc-slide:hover .svc-icon-wrapper {
+          background: var(--accent);
+          border-color: var(--accent);
+          transform: rotate(-10deg) scale(1.1);
+          box-shadow: 0 10px 30px rgba(255,107,53,0.4);
         }
 
-        /* ── reduced motion ── */
-        @media (prefers-reduced-motion: reduce) {
-          .svc-card, .svc-card--in {
-            opacity: 1 !important;
-            transform: none !important;
-            transition: none !important;
-          }
-          .svc-glow, .svc-blob { display: none; }
+        .svc-category {
+          font-family: var(--font-script, 'Satisfy', cursive);
+          font-size: 2rem;
+          color: #fff;
+          margin: 0 0 0.5rem 0;
+          font-weight: 400;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .svc-title {
+          font-family: var(--font-sans, sans-serif);
+          font-size: 1.8rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin: 0 0 1rem;
+          color: #fff;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+          line-height: 1.2;
+        }
+
+        .svc-desc {
+          font-size: 1rem;
+          color: rgba(255,255,255,0.85);
+          line-height: 1.5;
+          margin: 0;
+          opacity: 0;
+          transform: translateY(10px);
+          transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          height: 0;
+          overflow: hidden;
+        }
+        .svc-slide:hover .svc-desc {
+          opacity: 1;
+          transform: translateY(0);
+          height: auto;
+          margin-top: 1rem;
+        }
+
+        /* Nav Buttons */
+        .svc-nav-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          z-index: 10;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: white;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+        .svc-nav-btn:hover {
+          background: var(--accent);
+          border-color: var(--accent);
+          transform: translateY(-50%) scale(1.1);
+        }
+        .svc-nav-btn.left { left: 2rem; }
+        .svc-nav-btn.right { right: 2rem; }
+
+        @media (max-width: 768px) {
+          .svc-category { font-size: 1.5rem; }
+          .svc-title { font-size: 1.35rem; }
+          .svc-desc { font-size: 0.875rem; opacity: 1; height: auto; transform: translateY(0); margin-top: 0.75rem; }
+          .svc-slide-content { transform: translateY(0); padding: 0 1.25rem; }
+          .svc-icon-wrapper { width: 56px; height: 56px; margin-bottom: 1rem; }
+          
+          .svc-nav-btn { width: 44px; height: 44px; }
+          .svc-nav-btn.left { left: 1rem; }
+          .svc-nav-btn.right { right: 1rem; }
         }
       `}</style>
 
-      <PageHero
-        crumb="Services"
-        title="Everything You Need for the Perfect Trip"
-        subtitle="A complete suite of travel services under one trusted roof."
-        image="/images/nyc8.jpg"
-      />
+      <button onClick={scrollLeftBtn} className="svc-nav-btn left" aria-label="Previous">
+        <ChevronLeft size={32} />
+      </button>
+      
+      <button onClick={scrollRightBtn} className="svc-nav-btn right" aria-label="Next">
+        <ChevronRight size={32} />
+      </button>
 
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Our Services"
-            title="What We Offer"
-            description="From flights to luxury cruises, we handle every detail so you can simply relax and enjoy."
-          />
-
-          <div className="svc-grid">
-            {services.map((svc, i) => (
-              <ServiceCard key={svc.title} svc={svc} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <div 
+        ref={scrollRef}
+        className="svc-slider-container"
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeaveOrUp}
+        onMouseUp={handleMouseLeaveOrUp}
+        onMouseMove={handleMouseMove}
+      >
+          {services.map((svc, i) => {
+            const Icon = iconMap[svc.icon] || Sparkles
+            const bgImage = galleryImgs[i % galleryImgs.length]?.src || '/images/hero-maldives.png'
+            
+            return (
+              <div key={svc.title} className="svc-slide">
+              <div 
+                className="svc-slide-bg" 
+                style={{ backgroundImage: `url('${bgImage}')` }} 
+              />
+              <div className="svc-slide-overlay" />
+              <div className="svc-slide-content">
+                <div className="svc-icon-wrapper">
+                  <Icon size={30} strokeWidth={1.5} />
+                </div>
+                <h4 className="svc-category">Book My Dream</h4>
+                <h2 className="svc-title">{svc.title}</h2>
+                <p className="svc-desc">{svc.description}</p>
+              </div>
+            </div>
+          )
+        })}
+      </div>
     </main>
   )
 }

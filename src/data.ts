@@ -532,7 +532,7 @@ export const galleryImages = [
 
 export const COMPANY = {
   name: 'Book My Dream Travels',
-  phone: ['+91 87802 57606','+91 98765 43210'],
+  phone: ['+91 87802 57606','+91 95863 64385'],
   // whatsapp: '919876543210',
   email: 'kalashbookmydream@gmail.com',
   address: 'UG-16 , Ascon Plaza ,Nr, Bhulka Bhavan School , Anand Mahal Road , Adajan , Surat',

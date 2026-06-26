@@ -26,7 +26,7 @@ export default function DestinationsPage() {
             </div>
           </>
         )}
-        
+
         {international.length > 0 && (
           <>
             <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.5rem', fontWeight: 600 }}>International Destinations</h2>
