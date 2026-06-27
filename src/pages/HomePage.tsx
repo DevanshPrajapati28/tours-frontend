@@ -48,7 +48,7 @@ const iconMap: Record<string, React.ElementType> = {
 const quickCategories = [
   { icon: Compass, label: 'Holiday Packages', to: '/packages', bg: 'rgba(255,107,53,0.85)', border: 'rgba(255,140,80,0.6)' },
   { icon: Plane, label: 'Destinations', to: '/destinations', bg: 'rgba(16,185,129,0.85)', border: 'rgba(52,211,153,0.6)' },
-  { icon: BadgePercent, label: 'Offers', to: '/offers', bg: 'rgba(236,72,153,0.85)', border: 'rgba(244,114,182,0.6)' },
+  // { icon: BadgePercent, label: 'Offers', to: '/offers', bg: 'rgba(236,72,153,0.85)', border: 'rgba(244,114,182,0.6)' },
   { icon: LayoutGrid, label: 'All', to: '/packages', bg: 'rgba(14,165,233,0.85)', border: 'rgba(56,189,248,0.6)' },
 ]
 
@@ -242,7 +242,14 @@ export default function HomePage() {
   const prevSlide = () => goToSlide((currentSlide - 1 + heroImages.length) % heroImages.length)
 
   const latestBlogs = blogPosts.slice(0, 3)
-  const galleryPreview = galleryImgs.slice(0, 6)
+  const galleryPreview = [
+    { src: '/images/dest-kerala.png', title: 'Kerala Backwaters' },
+    { src: '/images/dest-switzerland.png', title: 'Swiss Alps' },
+    { src: '/images/dubai.jpg', title: 'Dubai Adventures' },
+    { src: '/images/baku.jpg', title: 'Explore Baku' },
+    { src: '/images/goa.jpg', title: 'Goa Beaches' },
+    { src: '/images/nyc8.jpg', title: 'City Tours' }
+  ];
 
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -611,7 +618,7 @@ export default function HomePage() {
           <div style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', color: '#84cc16', marginBottom: '-1rem', transform: 'rotate(-2deg)' }}>
             discover your next
           </div>
-          <h1 style={{ fontFamily: 'var(--font-marker)', fontSize: 'clamp(4rem, 11vw, 7.5rem)', fontWeight: 400, lineHeight: 1.1, textTransform: 'uppercase', textShadow: '0 4px 15px rgba(0,0,0,0.5)', letterSpacing: '2px' }}>
+          <h1 style={{ fontFamily: 'var(--font-marker)', fontSize: 'clamp(2.75rem, 12vw, 7.5rem)', fontWeight: 400, lineHeight: 1.1, textTransform: 'uppercase', textShadow: '0 4px 15px rgba(0,0,0,0.5)', letterSpacing: '2px' }}>
             ADVENTURE<span style={{ color: 'var(--accent)' }}>S</span>
           </h1>
           <p style={{ marginTop: '1rem', maxWidth: '34rem', marginInline: 'auto', fontSize: '1.05rem', lineHeight: 1.6, color: 'rgba(255,255,255,.9)', fontFamily: 'var(--font-sans)' }}>
@@ -629,14 +636,13 @@ export default function HomePage() {
           {/* Social Media Buttons */}
           <div style={{ marginTop: '1.25rem', display: 'flex', justifyContent: 'center', gap: '0.75rem' }}>
             {[
-              { icon: Facebook, label: 'Facebook' },
-              { icon: Instagram, label: 'Instagram' },
-              { icon: Twitter, label: 'Twitter' },
-              { icon: Youtube, label: 'YouTube' }
+              { icon: Facebook, label: 'Facebook', url: 'https://www.facebook.com/share/18tCiPVjBn/' },
+              { icon: Instagram, label: 'Instagram', url: 'https://www.instagram.com/bookmy.dream?igsh=MXZweTJ6MXoyeWMwZA==' },
+              { icon: Youtube, label: 'YouTube', url: 'https://youtube.com/@book.mydream?si=Bxoq1RmPq28VZ5xi' }
             ].map((social, idx) => {
               const Icon = social.icon;
               return (
-                <a key={idx} href="#" className="hero-social-btn" aria-label={social.label} style={{
+                <a key={idx} href={social.url} target="_blank" rel="noopener noreferrer" className="hero-social-btn" aria-label={social.label} style={{
                   display: 'inline-flex', width: 36, height: 36, alignItems: 'center', justifyContent: 'center',
                   borderRadius: '50%', background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)',
                   color: '#fff', textDecoration: 'none',
@@ -648,17 +654,18 @@ export default function HomePage() {
           </div>
 
           {/* Quick category icons */}
-          <div style={{ marginTop: '1.75rem', display: 'flex', justifyContent: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+          <div style={{ marginTop: '1.75rem', display: 'flex', justifyContent: 'center', gap: 'clamp(0.25rem, 2vw, 1.25rem)', maxWidth: '100%' }}>
             {quickCategories.map(({ icon: Icon, label, to, bg, border }) => (
-              <Link key={label} to={to} className="quick-cat-link" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, color: '#fff', textDecoration: 'none', width: 84 }}>
+              <Link key={label} to={to} className="quick-cat-link" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, color: '#fff', textDecoration: 'none', flex: 1, minWidth: 0 }}>
                 <span className="quick-cat-icon" style={{
-                  display: 'flex', width: 58, height: 58, alignItems: 'center', justifyContent: 'center',
+                  display: 'flex', width: 'clamp(48px, 15vw, 58px)', height: 'clamp(48px, 15vw, 58px)', alignItems: 'center', justifyContent: 'center',
                   borderRadius: '50%', background: bg, border: `1.5px solid ${border}`,
                   boxShadow: `0 4px 16px rgba(0,0,0,0.2)`,
+                  flexShrink: 0
                 }}>
-                  <Icon size={24} strokeWidth={1.8} color="#fff" />
+                  <Icon size={22} strokeWidth={1.8} color="#fff" />
                 </span>
-                <span style={{ fontSize: '.72rem', fontWeight: 600, textAlign: 'center', lineHeight: 1.3, textShadow: '0 1px 4px rgba(0,0,0,0.5)', letterSpacing: '0.01em' }}>
+                <span style={{ fontSize: 'clamp(0.6rem, 2.5vw, 0.72rem)', fontWeight: 600, textAlign: 'center', lineHeight: 1.2, textShadow: '0 1px 4px rgba(0,0,0,0.5)', letterSpacing: '0.01em' }}>
                   {label}
                 </span>
               </Link>
@@ -671,7 +678,7 @@ export default function HomePage() {
           TRUST STRIP
       ═══════════════════════════════════════════════ */}
       <section style={{ background: 'var(--primary)', padding: '1.5rem 0' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '1rem' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.5rem' }}>
           {trustStats.map(s => (
             <div key={s.label} style={{ textAlign: 'center', color: '#fff' }}>
               <p style={{ fontFamily: "'Outfit', 'Segoe UI', sans-serif", fontSize: '1.625rem', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', fontVariantNumeric: 'tabular-nums' }}>{s.value}</p>

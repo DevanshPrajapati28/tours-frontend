@@ -40,14 +40,14 @@ const footerNav = [
 ]
 
 const socials = [
-  { Icon: Facebook, label: 'Facebook' },
-  { Icon: Instagram, label: 'Instagram' },
-  { Icon: Youtube, label: 'YouTube' },
+  { Icon: Facebook, label: 'Facebook', url: 'https://www.facebook.com/share/18tCiPVjBn/' },
+  { Icon: Instagram, label: 'Instagram', url: 'https://www.instagram.com/bookmy.dream?igsh=MXZweTJ6MXoyeWMwZA==' },
+  { Icon: Youtube, label: 'YouTube', url: 'https://youtube.com/@book.mydream?si=Bxoq1RmPq28VZ5xi' },
 ]
 
 export default function SiteFooter() {
   return (
-    <footer style={{ 
+    <footer style={{
       position: 'relative',
       color: '#ffffff',
       backgroundImage: `linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.9)), url("/images/hero-maldives.png")`,
@@ -73,7 +73,7 @@ export default function SiteFooter() {
                 <span style={{ fontFamily: 'var(--font-serif)', fontSize: '1.125rem', fontWeight: 700, marginBottom: '0.25rem' }}>
                   Book My Dream
                 </span>
-                <span style={{ fontSize: '.65rem', fontWeight: 700, letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--accent)' }}>
+                <span style={{ fontSize: '.75rem', fontWeight: 600, letterSpacing: '.05em', color: 'var(--accent)' }}>
                   Ek Safar Hamare Sath
                 </span>
               </span>
@@ -127,8 +127,8 @@ export default function SiteFooter() {
 
         {/* ── Bottom bar ── */}
         <div className="footer-bottom" style={{ marginTop: '2rem', borderTop: '1px solid rgba(255, 255, 255, 0.2)', paddingTop: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-          
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+
+          {/* <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link to="/terms" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Terms of Use</Link>
             <span style={{ color: 'rgba(255,255,255,0.4)' }}>|</span>
             <Link to="/privacy" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Privacy Policy</Link>
@@ -136,17 +136,19 @@ export default function SiteFooter() {
             <Link to="/contact" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Contact Us</Link>
             <span style={{ color: 'rgba(255,255,255,0.4)' }}>|</span>
             <Link to="/help" style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}>Help</Link>
-          </div>
+          </div> */}
 
           <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,.7)', margin: 0, textAlign: 'center', fontWeight: 500 }}>
-            &copy; {new Date().getFullYear()} {COMPANY.name}. All rights reserved.
+            Designed & Developed by <a href="https://www.logicmindsbyparii.com/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>Logicminds by parii</a>
           </p>
-          
+
           <div style={{ display: 'flex', gap: '.75rem', marginTop: '0.5rem' }}>
-            {socials.map(({ Icon, label }) => (
+            {socials.map(({ Icon, label, url }) => (
               <a
                 key={label}
-                href="#"
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
                 style={{
                   width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center',

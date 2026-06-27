@@ -11,7 +11,7 @@ export default function ContactPage() {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
     const data = new FormData(form);
-    
+
     const payload = {
       name: data.get('name'),
       email: data.get('email'),
@@ -36,11 +36,11 @@ export default function ContactPage() {
   };
 
   return (
-    <main style={{ 
-      minHeight: '100vh', 
-      position: 'relative', 
-      display: 'flex', 
-      alignItems: 'center', 
+    <main style={{
+      minHeight: '100vh',
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
       paddingTop: '80px', // account for header
       paddingBottom: '4rem'
     }}>
@@ -51,21 +51,21 @@ export default function ContactPage() {
       </div>
 
       <div className="container" style={{ width: '100%', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
-        
+
         {/* Left Column - Content */}
         <div style={{ color: '#fff' }}>
-          <h1 style={{ 
-            fontFamily: 'var(--font-serif)', 
-            fontSize: 'clamp(2.5rem, 4vw, 3.5rem)', 
-            fontWeight: 800, 
-            lineHeight: 1.1, 
+          <h1 style={{
+            fontFamily: 'var(--font-serif)',
+            fontSize: 'clamp(2.5rem, 4vw, 3.5rem)',
+            fontWeight: 800,
+            lineHeight: 1.1,
             marginBottom: '1.5rem',
             background: 'linear-gradient(to right, #ffffff, #aedfff)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             textShadow: '0 4px 20px rgba(0,0,0,0.2)'
           }}>
-            You Have Questions,<br/>We Have Answers
+            You Have Questions,<br />We Have Answers
           </h1>
           <p style={{ fontSize: '1rem', lineHeight: 1.7, opacity: 0.9, maxWidth: '500px', marginBottom: '2.5rem', fontWeight: 300 }}>
             Discover experiences you won't find anywhere else — thoughtfully designed to immerse you in the heart of the destination. Soulful stories waiting to be lived.
@@ -81,14 +81,14 @@ export default function ContactPage() {
                 Mon–Sat | 09:00 – 19:00 (IST)
               </p>
             </div>
-            
+
             <div>
               <h3 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--accent)', marginBottom: '0.75rem' }}>Social Media</h3>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0, opacity: 0.9, fontSize: '0.95rem', lineHeight: 1.8, fontWeight: 400 }}>
-                <li><a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>Instagram</a></li>
-                <li><a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>LinkedIn</a></li>
-                <li><a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>Facebook</a></li>
-                <li><a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>YouTube</a></li>
+                <li><a href="https://www.instagram.com/bookmy.dream?igsh=MXZweTJ6MXoyeWMwZA==" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>Instagram</a></li>
+                {/* <li><a href="#" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>LinkedIn</a></li> */}
+                <li><a href="https://www.facebook.com/share/18tCiPVjBn/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>Facebook</a></li>
+                <li><a href="https://youtube.com/@book.mydream?si=Bxoq1RmPq28VZ5xi" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = 'var(--accent)'} onMouseLeave={e => e.currentTarget.style.color = 'inherit'}>YouTube</a></li>
               </ul>
             </div>
 
@@ -102,7 +102,7 @@ export default function ContactPage() {
             <div>
               <h3 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.15em', color: 'var(--accent)', marginBottom: '0.75rem' }}>Contact</h3>
               <p style={{ opacity: 0.9, fontSize: '0.95rem', margin: 0, fontWeight: 400, lineHeight: 1.6 }}>
-                {COMPANY.phone[0]}<br/>
+                {COMPANY.phone[0]}<br />
                 {COMPANY.phone[1]}
               </p>
             </div>

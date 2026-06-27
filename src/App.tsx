@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Layout from './components/Layout'
 import HomePage from './pages/HomePage'
 import PackagesPage from './pages/PackagesPage'
@@ -11,6 +12,19 @@ import BlogPage from './pages/BlogPage'
 import BlogDetailPage from './pages/BlogDetailPage'
 import ServicesPage from './pages/ServicesPage'
 import NotFoundPage from './pages/NotFoundPage'
+
+// Disable browser's default scroll restoration to always start at the top on refresh
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 // Admin
 import { AuthProvider, useAuth } from './admin/AuthContext'
@@ -40,6 +54,7 @@ export default function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           {/* ── Public Frontend ── */}
           <Route element={<Layout />}>

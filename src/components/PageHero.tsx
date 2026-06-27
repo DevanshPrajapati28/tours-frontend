@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
-type Props = { title: string; subtitle?: string; crumb: string; image?: string }
+type Props = { title: string; subtitle?: string; crumb: string; image?: string; blur?: boolean; imagePos?: string }
 
-export default function PageHero({ title, subtitle, crumb, image }: Props) {
+export default function PageHero({ title, subtitle, crumb, image, blur, imagePos }: Props) {
   return (
     <section style={{
       position: 'relative', overflow: 'hidden',
@@ -12,8 +12,8 @@ export default function PageHero({ title, subtitle, crumb, image }: Props) {
     }}>
       {image && (
         <>
-          <img src={image} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,.35))' }} />
+          <img src={image} alt="" style={{ position: 'absolute', inset: -20, width: 'calc(100% + 40px)', height: 'calc(100% + 40px)', objectFit: 'cover', objectPosition: imagePos || 'center', filter: blur ? 'blur(8px)' : 'none' }} />
+          <div style={{ position: 'absolute', inset: 0, background: blur ? 'linear-gradient(to bottom, rgba(0,0,0,.4), rgba(0,0,0,.5))' : 'linear-gradient(to bottom, rgba(0,0,0,.65), rgba(0,0,0,.35))' }} />
         </>
       )}
       {/* Decorative blobs */}
@@ -28,8 +28,8 @@ export default function PageHero({ title, subtitle, crumb, image }: Props) {
           <ChevronRight size={16} />
           <span style={{ color: 'var(--accent)' }}>{crumb}</span>
         </nav>
-        <h1 style={{ marginTop: '.75rem', fontFamily: 'var(--font-serif)', fontSize: 'clamp(2rem, 5vw, 3.25rem)', fontWeight: 700, maxWidth: '36rem', lineHeight: 1.2 }}>{title}</h1>
-        {subtitle && <p style={{ marginTop: '.75rem', maxWidth: '38rem', fontSize: '1rem', lineHeight: 1.75, color: 'rgba(255,255,255,.8)' }}>{subtitle}</p>}
+        <h1 style={{ marginTop: '.75rem', fontFamily: 'var(--font-marker)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 400, maxWidth: '40rem', lineHeight: 1.1, textTransform: 'uppercase', letterSpacing: '1px' }}>{title}</h1>
+        {subtitle && <p style={{ marginTop: '1.25rem', maxWidth: '38rem', fontSize: '1.1rem', lineHeight: 1.75, color: 'rgba(255,255,255,.9)', fontFamily: 'var(--font-sans)' }}>{subtitle}</p>}
       </div>
     </section>
   )

@@ -45,9 +45,9 @@ export default function DestinationCard({ dest }: { dest: Destination }) {
       }} />
 
       {/* Floating Glassmorphic Content Block */}
-      <div className="dest-glass-panel" style={{ 
-        position: 'relative', 
-        padding: '1rem', 
+      <div className="dest-glass-panel" style={{
+        position: 'relative',
+        padding: '1rem',
         width: '100%',
         background: 'rgba(255, 255, 255, 0.15)',
         backdropFilter: 'blur(12px)',
