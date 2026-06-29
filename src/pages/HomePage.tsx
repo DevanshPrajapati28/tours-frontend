@@ -188,7 +188,7 @@ export default function HomePage() {
   const [featured, setFeatured] = useState<Package[]>([])
   const [trending, setTrending] = useState<Package[]>([])
   const [popularDest, setPopularDest] = useState<Destination[]>([])
-  const [galleryImgs, setGalleryImgs] = useState<{src: string, title: string, category: string}[]>([])
+  const [galleryImgs, setGalleryImgs] = useState<{ src: string, title: string, category: string }[]>([])
   const [currentSlide, setCurrentSlide] = useState(0)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
@@ -616,10 +616,10 @@ export default function HomePage() {
 
         <div className="container" style={{ position: 'relative', zIndex: 5, paddingTop: '4rem', paddingBottom: '2rem', textAlign: 'center', color: '#fff' }}>
           <div style={{ fontFamily: 'var(--font-script)', fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', color: '#84cc16', marginBottom: '-1rem', transform: 'rotate(-2deg)' }}>
-            discover your next
+            don't just dream it,
           </div>
-          <h1 style={{ fontFamily: 'var(--font-marker)', fontSize: 'clamp(2.75rem, 12vw, 7.5rem)', fontWeight: 400, lineHeight: 1.1, textTransform: 'uppercase', textShadow: '0 4px 15px rgba(0,0,0,0.5)', letterSpacing: '2px' }}>
-            ADVENTURE<span style={{ color: 'var(--accent)' }}>S</span>
+          <h1 style={{ fontFamily: 'var(--font-marker)', fontSize: 'clamp(2.5rem, 9vw, 5.5rem)', fontWeight: 400, lineHeight: 1.1, textTransform: 'uppercase', textShadow: '0 4px 15px rgba(0,0,0,0.5)', letterSpacing: '2px' }}>
+            BOOK YOUR <span style={{ color: 'var(--accent)' }}>DREAM</span>
           </h1>
           <p style={{ marginTop: '1rem', maxWidth: '34rem', marginInline: 'auto', fontSize: '1.05rem', lineHeight: 1.6, color: 'rgba(255,255,255,.9)', fontFamily: 'var(--font-sans)' }}>
             From local escapes to far-flung journeys, find what makes you happy — anytime, anywhere.
@@ -654,9 +654,9 @@ export default function HomePage() {
           </div>
 
           {/* Quick category icons */}
-          <div style={{ marginTop: '1.75rem', display: 'flex', justifyContent: 'center', gap: 'clamp(0.25rem, 2vw, 1.25rem)', maxWidth: '100%' }}>
+          <div style={{ marginTop: '1.75rem', display: 'flex', justifyContent: 'center', gap: 'clamp(1rem, 4vw, 2.5rem)', flexWrap: 'wrap' }}>
             {quickCategories.map(({ icon: Icon, label, to, bg, border }) => (
-              <Link key={label} to={to} className="quick-cat-link" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, color: '#fff', textDecoration: 'none', flex: 1, minWidth: 0 }}>
+              <Link key={label} to={to} className="quick-cat-link" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, color: '#fff', textDecoration: 'none', width: '100px' }}>
                 <span className="quick-cat-icon" style={{
                   display: 'flex', width: 'clamp(48px, 15vw, 58px)', height: 'clamp(48px, 15vw, 58px)', alignItems: 'center', justifyContent: 'center',
                   borderRadius: '50%', background: bg, border: `1.5px solid ${border}`,
@@ -691,8 +691,20 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════
           OFFERS
       ═══════════════════════════════════════════════ */}
-      <section className="section" style={{ paddingTop: '2.5rem', paddingBottom: '2.5rem' }}>
-        <div className="container">
+      <section className="section" style={{ position: 'relative', overflow: 'hidden', paddingTop: '3.5rem', paddingBottom: '3.5rem' }}>
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `url(${dubaiImg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          filter: 'blur(12px)',
+          transform: 'scale(1.1)',
+          zIndex: 0,
+          opacity: 0.8
+        }}></div>
+        <div style={{ position: 'absolute', inset: 0, background: 'rgba(255, 255, 255, 0.6)', zIndex: 0 }}></div>
+        <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.75rem', fontWeight: 800, color: 'var(--fg)' }}>Offers for you</h2>
           <div className="offers-row" style={{ marginTop: '1.5rem', display: 'grid', gridTemplateColumns: '1.3fr 1.3fr 1fr', gap: '1rem', alignItems: 'stretch' }}>
 
@@ -732,7 +744,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════
           TRENDING PACKAGES
       ═══════════════════════════════════════════════ */}
-      <section className="section section-alt">
+      <section className="section section-alt" style={{ backgroundColor: '#0f4c81' }}>
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
             <SectionHeading
@@ -745,8 +757,9 @@ export default function HomePage() {
               title="Tours Filling Up Fast"
               description="Real prices, real departure dates — book before seats run out."
               align="left"
+              light={true}
             />
-            <Link to="/packages" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '.875rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none', flexShrink: 0 }}>View All Packages <ArrowRight size={16} /></Link>
+            <Link to="/packages" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: '.875rem', fontWeight: 600, color: '#fff', textDecoration: 'none', flexShrink: 0 }}>View All Packages <ArrowRight size={16} /></Link>
           </div>
           <div className="dense-card-row" style={{ marginTop: '2rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
             {trending.map(pkg => {
@@ -792,7 +805,7 @@ export default function HomePage() {
       <section ref={popularSectionRef} className="section" style={{
         position: 'relative',
         background: `url(${switzerlandImg}) center/cover no-repeat`,
-        marginTop: '2rem',
+        marginTop: 0,
         paddingTop: '5rem',
         paddingBottom: '5rem',
       }}>
@@ -801,7 +814,7 @@ export default function HomePage() {
 
         <div style={{
           position: 'absolute', top: -1, left: 0, right: 0, height: '24px', zIndex: 2, pointerEvents: 'none',
-          background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L0,20 Q2,12 5,18 T12,10 T18,18 T25,8 T32,18 T38,12 T45,20 T52,10 T58,18 T65,8 T72,18 T78,12 T85,20 T92,10 T98,18 L100,12 L100,0 Z' fill='%23ffffff'/%3E%3C/svg%3E") repeat-x top / 150px 100%`
+          background: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L0,20 Q2,12 5,18 T12,10 T18,18 T25,8 T32,18 T38,12 T45,20 T52,10 T58,18 T65,8 T72,18 T78,12 T85,20 T92,10 T98,18 L100,12 L100,0 Z' fill='%230f4c81'/%3E%3C/svg%3E") repeat-x top / 150px 100%`
         }}></div>
 
         <div style={{
@@ -1243,7 +1256,7 @@ export default function HomePage() {
           TESTIMONIALS
       ═══════════════════════════════════════════════ */}
       <section className="section" style={{ position: 'relative', overflow: 'hidden', background: 'linear-gradient(135deg, #c5d8eb 0%, #e6f0fa 100%)' }}>
-        
+
         {/* Wavy Top Edge to blend with Gallery */}
         <div style={{ position: 'absolute', top: '-1px', left: 0, width: '100%', overflow: 'hidden', lineHeight: 0, zIndex: 2 }}>
           <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style={{ display: 'block', width: '100%', height: '50px' }}>
@@ -1279,8 +1292,8 @@ export default function HomePage() {
       {/* <section className="section">
         <div className="container">
           <div style={{ position: 'relative', borderRadius: 24, background: 'var(--primary)', padding: '3rem 2rem', textAlign: 'center', color: '#fff', overflow: 'hidden' }}> */}
-            {/* Static ambient blobs — no JS movement, GPU isolated */}
-            {/* <div className="ambient-blob" style={{ pointerEvents: 'none', position: 'absolute', right: '-4rem', top: '-4rem', width: 256, height: 256, borderRadius: 9999, background: 'rgba(255,107,53,.2)', filter: 'blur(48px)' }} />
+      {/* Static ambient blobs — no JS movement, GPU isolated */}
+      {/* <div className="ambient-blob" style={{ pointerEvents: 'none', position: 'absolute', right: '-4rem', top: '-4rem', width: 256, height: 256, borderRadius: 9999, background: 'rgba(255,107,53,.2)', filter: 'blur(48px)' }} />
             <div className="ambient-blob" style={{ pointerEvents: 'none', position: 'absolute', left: '-4rem', bottom: '-4rem', width: 256, height: 256, borderRadius: 9999, background: 'rgba(255,255,255,.1)', filter: 'blur(48px)' }} />
             <div style={{ position: 'relative', maxWidth: '36rem', marginInline: 'auto' }}>
               <h2 style={{ fontFamily: 'var(--font-marker)', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 400, textTransform: 'uppercase', letterSpacing: '1px' }}>NEWSLETTER</h2>
